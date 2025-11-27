@@ -9,6 +9,7 @@ while True:
     print("2 - Selecionar / Buscar")
     print("3 - Atualizar / Modificar")
     print("4 - Excluir")
+    print("5 - Sair")
     print("\n")
 
     opcao = input("Informe uma Opção: ")
@@ -18,7 +19,7 @@ while True:
         case "1":
             nome = input("Informe o seu Nome: ")
             lista_cliente.append(nome)
-            print(f"O Nome: {nome} foi inserido com sucesso!")
+            print(f"O Nome: {nome} foi inserido com sucesso! ")
 
         case "2":
             print("Lista de clientes:", lista_cliente)
@@ -46,8 +47,8 @@ while True:
             else:
                 print(f"O nome {nome_para_excluir} não foi encontrado.")
                 print("Clientes atuais:", lista_cliente)
-
+        case "5":
+            print("Saindo")
+            break
         case _:
             print("Opção inválida.")
-
-        print("Opção Invalida.")
