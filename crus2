@@ -1,0 +1,181 @@
+mport os 
+os.system("cls")
+from dataclasses import dataclass
+import time 
+
+lista_aluno = []
+
+@dataclass
+class Endereco:
+    logradouro: str 
+    numero: str 
+    cidade: str 
+    estado: str 
+
+@dataclass
+class Aluno:
+    nome: str 
+    data_nasc: str 
+    r_a: str 
+    curso: str 
+    endereco: Endereco   
+
+    def mostrar_dados(self):
+        print("\n=== DADOS DO  ALUNO ===")
+        print(f"O Nome do Aluno é: {self.nome}")
+        print(f"A Data de Nascimento do Aluno é: {self.data_nasc}")
+        print(f"O RA do Aluno é: {self.r_a}")
+        print(f"O Curso de Aluno é: {self.curso}")
+        print(f"O Logradouro do Aluno é: {self.endereco.logradouro}")
+        print(f"O Numero da Casa do Aluno é: {self.endereco.numero}")
+        print(f"A Cidade do Aluno é: {self.endereco.cidade}")
+        print(f"O Estado do Aluno é: {self.endereco.estado}")
+
+
+def lista_esta_vazia(lista_aluno):
+    if not lista_aluno:
+        print("\n Não há Alunos cadastrados.")
+        return True
+    return False
+
+
+def adicionar_alunos(lista_aluno):
+    print("\n === Adicionar Aluno === ")
+    nome = input("Informe o Nome do Aluno: ")
+    data_nasc = input("Informe a Data de  Nascimento do Aluno: ")
+    r_a = input("Informe o RA (matricula) do Aluno: ")
+    curso = input("Informe o Curso do Aluno: ")
+
+    endereco = Endereco(
+        logradouro=input("Informe o Logradouro do Aluno: "),
+        numero=input("Informe o Numero (casa) do Aluno: "),
+        cidade=input("Informe a Cidade do Aluno: "),
+        estado=input("Informe o Estado do Aluno: ")
+    )
+    
+    novo_aluno = Aluno(nome=nome, data_nasc=data_nasc, r_a=r_a, curso=curso, endereco=endereco)
+    lista_aluno.append(novo_aluno)
+    print(f"\nAluno : {nome} adicionado com sucesso!")
+
+
+def encontrar_aluno_por_nome(lista_aluno, nome_buscar):
+    nome_buscar_lower = nome_buscar.lower()
+    for aluno in lista_aluno:
+        if aluno.nome.lower() == nome_buscar_lower:
+            return aluno
+    return None
+
+
+def mostrar_todos_aluno(lista_aluno):
+    if lista_esta_vazia(lista_aluno):
+        return
+    print("\n--- Lista de Alunos ---")
+    for aluno in lista_aluno:
+        aluno.mostrar_dados()
+
+
+def atualizar_alunos(lista_aluno):
+    if lista_esta_vazia(lista_aluno):
+        return
+
+    mostrar_todos_aluno(lista_aluno)
+    print("--- Atualizar dados do Aluno ---")
+
+    nome_buscar = input("\nDigite o nome do Aluno: ")
+    aluno_para_atualizar = encontrar_aluno_por_nome(lista_aluno, nome_buscar)
+
+    if aluno_para_atualizar:
+        print("\nAluno encontrado.")
+        print("\nInforme os novos dados ou deixe em branco para manter o valor atual.")
+
+        novo_nome = input(f"\nNome atual: {aluno_para_atualizar.nome}\nNovo nome: ")
+        nova_data = input(f"Data de nascimento atual: {aluno_para_atualizar.data_nasc}\nNova data: ")
+        novo_ra = input(f"RA atual: {aluno_para_atualizar.r_a}\nNovo RA: ")
+        novo_curso = input(f"Curso atual: {aluno_para_atualizar.curso}\nNovo curso: ")
+
+    
+        novo_logradouro = input(f"Logradouro atual: {aluno_para_atualizar.endereco.logradouro}\nNovo logradouro: ")
+        novo_numero = input(f"Numero atual: {aluno_para_atualizar.endereco.numero}\nNovo numero: ")
+        nova_cidade = input(f"Cidade atual: {aluno_para_atualizar.endereco.cidade}\nNova cidade: ")
+        novo_estado = input(f"Estado atual: {aluno_para_atualizar.endereco.estado}\nNovo estado: ")
+
+     
+        if novo_nome:
+            aluno_para_atualizar.nome = novo_nome
+        if nova_data:
+            aluno_para_atualizar.data_nasc = nova_data
+        if novo_ra:
+            aluno_para_atualizar.r_a = novo_ra
+        if novo_curso:
+            aluno_para_atualizar.curso = novo_curso
+        if novo_logradouro:
+            aluno_para_atualizar.endereco.logradouro = novo_logradouro
+        if novo_numero:
+            aluno_para_atualizar.endereco.numero = novo_numero
+        if nova_cidade:
+            aluno_para_atualizar.endereco.cidade = nova_cidade
+        if novo_estado:
+            aluno_para_atualizar.endereco.estado = novo_estado
+
+        print(f"\nDados do Aluno '{nome_buscar}' atualizados com sucesso!")
+
+    else:
+        print(f"\nAluno com o Nome '{nome_buscar}' não foi encontrado.")
+
+
+def excluir_aluno(lista_aluno):
+    if lista_esta_vazia(lista_aluno):
+        return
+
+    mostrar_todos_aluno(lista_aluno)
+    nome_buscar = input("\nInforme o nome do aluno que deseja excluir: ")
+
+    aluno_para_remove = encontrar_aluno_por_nome(lista_aluno, nome_buscar)
+
+    if aluno_para_remove:
+        lista_aluno.remove(aluno_para_remove)
+        print(f"\nAluno '{nome_buscar}' excluído com sucesso!")
+    else:
+        print(f"\nAluno '{nome_buscar}' não encontrado.")
+
+
+while True:
+    print("""
+    --- Gerenciador de  Clientes ---
+    1 - Adicionar
+    2 - Mostrar todos
+    3 - Atualizar
+    4 - Excluir
+    0 - Sair
+            """)
+
+    try:
+        opcao = int(input("Informe uma das opções acima: "))
+    except ValueError:
+        print("\nEntrada inválida. Informe um número...")
+        time.sleep(2)
+        os.system("cls || clear")
+        continue
+
+    match opcao:
+        case 1:
+            adicionar_alunos(lista_aluno)
+        case 2:
+            mostrar_todos_aluno(lista_aluno)
+        case 3:
+            atualizar_alunos(lista_aluno)
+        case 4:
+            excluir_aluno(lista_aluno)
+        case 0:
+            print("\nSaindo do programa...")
+            break
+        case _:
+            print("\nOpção inválida. \nTente novamente.")
+
+    if opcao != 1 and opcao != 0:
+        time.sleep(4)
+    elif opcao == 1:
+        time.sleep(1)
+
+    if opcao != 0:
+        os.system("cls")
