@@ -15,6 +15,13 @@ class Cliente:
     telefone: str 
     endereco: str 
     
+    def mostrar_dados_clientes(self):
+        print("--- Dados Dos Clientes --- ")
+        print(f"O Nome do Cliente é: {self.nome}")
+        print(f"O E-MAIL do Cliente é: {self.email}")
+        print(f"O Telefone do Cliente é: {self.telefone}")
+        print(f"O Endereço do Cliente é: {self.endereco}")
+            
 @dataclass
 
 class Produto:
@@ -33,7 +40,7 @@ class Produto:
 # ------------------------------
 # CODIGOS PARA CLIENTES
 # ------------------------------
-def lista_esta_vazia(lista_cliente):
+def lista_esta_vazia2(lista_cliente):
     if not lista_cliente:
         print("\n Não há clientes cadastrados.")
         return True
@@ -45,8 +52,69 @@ def lista_esta_vazia(lista_cliente):
 def adicionar_cliente(lista_cliente):
     print(f"\n === Adicionar Cliente ===")
     nome = input("Informe o Nome do Cliente: ")
+    email = input("Informe o E-MAIL do Cliente: ")
+    telefone = input("Informe o Telefone do Cliente: ")
+    endereco = input("Informe o  Endereço do Cliente: ")
     
+    novo_cliente = Cliente(nome=nome , email=email , telefone=telefone , endereco=endereco)
+    lista_cliente.append(novo_cliente)
+    print(f"\nCliente com o Nome: {nome} foi adicionado. ")
+    
+# Encontrar Cliente pelo  Nome.
+
+def encontrar_cliente_pelo_nome(lista_cliente, nome_buscar):
+    nome_buscar_lower = nome_buscar.lower()
+    for cliente in lista_cliente:
+        if cliente.nome.lower == nome_buscar_lower:
+            return lista_cliente
+        return None    
+
+# Mostrar Todos os Clientes.
+
+def mostrar_todos_os_clientes(lista_clientes):
+    if lista_esta_vazia2(lista_cliente):
+        return
+    print("\n --- Lista de Clientes --- ")
+    for cliente in lista_cliente:
+        cliente.mostrar_dados_do_clientes()
+# Atualizando os Clientes       
+def atualizar_clientes(lista_clientes):
+    if lista_esta_vazia2(lista_cliente):
+        return
+    mostrar_todos_os_clientes(lista_clientes)
+    print("\n --- Atualizar dados dos Clientes --- ")
+    
+    nome_buscar = input("\nInforme o Nome do Cliente: ")
+    cliente_para_atualizar = encontrar_cliente_pelo_nome(lista_cliente, nome_buscar)
+    
+    if cliente_para_atualizar:
+        print("\nCliente Encontrado.")
+        print("\nInforme Novos Clientes ou Deixe os Mesmo Dados.")
+        
+        novo_nome = input("Informe o Novo Nome do Cliente: ")
+        novo_email = input("Informe o Novo E-MAIL do Cliente: ")
+        novo_telefone = input("Informe o Novo Telefone do Cliente: ")
+        novo_endereco = input("Informe um Novo Endereço do Cliente: ")
+        
+        if novo_nome:
+            cliente_para_atualizar.nome = novo_nome
+        if novo_email:
+            cliente_para_atualizar.email = novo_email
+        if novo_telefone:
+            cliente_para_atualizar.telefone = novo_telefone
+        if novo_endereco:
+            cliente_para_atualizar.endereco = novo_endereco
+        print(f"\nDados do Cliente: {nome_buscar} atualizado com sucesso!")
+    else:
+        print(f"\nCliente com o Nome: {nome_buscar} não encontrado.")
+        
+# Excluir Cliente.
+
+def excluir_cliente(lista_clientes):
+    if lista_esta_vazia2(lista_cliente):
+        return
    
+        
 
 def lista_esta_vazia(lista_produto):
     if not lista_produto:
